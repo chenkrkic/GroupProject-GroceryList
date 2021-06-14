@@ -1,3 +1,26 @@
+
+//var saveItemBtn = document.querySelector("");
+//var saveItemName = document.querySelector("");
+//var saveItemDuration = document.querySelector("");
+
+
+// on load - get localStorage info:
+
+
+// Save Purchased Item to tracking list:
+//var saveToTrack = function (itemName) {};
+
+
+
+// API call to nutrition facts:
+
+
+
+// API call to Wine Paring:
+
+
+
+// click event listener
 // Selectors
 const itemInput = document.querySelector('.item-input');
 const addButton = document.querySelector('.add-b');
@@ -13,11 +36,12 @@ function addItem(event) {
     event.preventDefault();
     //ITEM DIV
     const itemDiv = document.createElement("div");
-    itemDiv.classList.add("add");
+    itemDiv.classList.add("add-item");
     //Create LI
     const newItem = document.createElement('li');
     newItem.innerText = itemInput.value;
     newItem.classList.add('track-item');
+    newItem.setAttribute('draggable', 'true');
     itemDiv.appendChild(newItem);
     // ADD ITEM TO LOCALSTORAGE
     saveLocalItems(itemInput.value);
@@ -89,3 +113,38 @@ function removeLocalItems(item) {
     localStorage.setItem('items', JSON.stringify(items));
 }
 
+// Drag & Drop Dom manipulation code:
+// var lists = {};
+
+// var createList = function (itemText, itemList) {
+//     // create elements that make up a task item
+//     var itemLi = $("<li>").addClass("list-group-item");
+
+//     var itemP = $("<p>")
+//         .addClass("info")
+//         .text(itemText);
+
+//     itemLi.append(itemP);
+
+//     $("#list-" + itemList).append(taskLi);
+// }
+
+const draggables = document.querySelectorAll('.track-item')
+const containers = document.querySelectorAll('.item-container')
+
+draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+        draggable.classList.add('dragging');
+    })
+    draggable.addEventListener('dragend', () => {
+        draggable.classList.remove('dragging')
+    })
+})
+
+containers.forEach(container => {
+    container.addEventListener('dragover', event => {
+        event.preventDefault()
+        const draggable = document.querySelector('.dragging')
+        container.appendChild(draggable)
+    })
+})
